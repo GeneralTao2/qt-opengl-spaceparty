@@ -1,0 +1,33 @@
+#ifndef PORCESS_INPUT_H
+#define PORCESS_INPUT_H
+
+#include <glfw3.h>
+
+#include <iostream>
+#include <settings/classes/objects/camera.h>
+#include <settings/classes/tools/main_tool.h>
+
+extern Camera camera;
+
+class PI
+{
+public:
+    static float lastX = SCR_WIDTH / 2.0f;
+    static float lastY = SCR_HEIGHT / 2.0f;
+    static bool firstMouse = true;
+    
+    // timing
+    static float deltaTime = 0.0f;
+    static float lastFrame = 0.0f;
+    
+    static bool cursorFlag = false;
+    static lastCursorReaction = 0;
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+    static void processInput(GLFWwindow *window);
+private:
+    PI();
+};
+
+#endif // PORCESS_INPUT_H
