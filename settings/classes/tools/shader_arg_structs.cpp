@@ -26,11 +26,11 @@ void TextureColorArgs::Bind() {
 void TextureColorMapBoneArgs::Calc() {
     for(auto &bone: bones) {
         for(auto &point: bone.points) {
-            model = glm::translate(model, glm::vec3(point.position, 0) );
+            model = glm::translate(model, glm::vec3(point.position * scale, 0) );
             model = glm::rotate(model, point.angle, glm::vec3(0, 0, 1));
         }
         bone.model = glm::translate(model, glm::vec3(0,0, bone.Zindex) );
-        bone.model = glm::scale(bone.model, glm::vec3(bone.scale, 1));
+        bone.model = glm::scale(bone.model, glm::vec3(bone.scale * scale, 1));
     }
 }
 
@@ -46,17 +46,19 @@ void TextureColorMapBoneArgs::Bind(Bone &bone) {
 
 
 void TextureColorMapBodyArgs::Bind() {
-    model = glm::translate(model, glm::vec3(position, 1) );
-    model = glm::rotate(model, angle, glm::vec3(0, 0, 1));
-    glm::mat4 localModel = glm::translate(model, glm::vec3(0,0, Zindex) );
-    localModel = glm::scale(localModel, glm::vec3(scale, 1));
+    model = glm::translate(model, glm::vec3(bone.points[0].position, 0) );
+    model = glm::rotate(model, bone.points[0].angle, glm::vec3(0, 0, 1));
+
+    bone.model = glm::scale(model, glm::vec3(bone.scale  * scale, 1));
+    bone.model = glm::translate(bone.model, glm::vec3(0,0, bone.Zindex) );
+
     shader.Use();
     shader.SetInteger("plain", 0);
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
-    shader.SetVector4f("textureCoords", textureCoords);
+    shader.SetVector4f("textureCoords", bone.textureCoords);
     shader.SetVector3f("color", color);
-    shader.SetMatrix4("model", localModel);
+    shader.SetMatrix4("model", bone.model);
 }
 
 

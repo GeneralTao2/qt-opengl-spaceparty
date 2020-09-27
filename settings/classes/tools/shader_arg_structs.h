@@ -33,28 +33,39 @@ struct TextureColorArgs {
 struct TextureColorMapBoneArgs {
     std::vector<Bone> bones;
     std::vector<BoneTimeChain> *timeLine;
+    glm::mat4 model;
+    GLfloat &scale;
+    glm::vec3 color;
+    Texture2D &texture;
+    Shader &shader;
+    TextureColorMapBoneArgs(TextureColorMapBoneArgs &a) = default;
+    TextureColorMapBoneArgs(std::vector<Bone> Bones, GLfloat &Scale, glm::vec3 Color, Texture2D &Texture_, Shader &Shader_)
+        : bones(Bones), scale(Scale), color(Color), texture(Texture_), shader(Shader_){}
     BoneTimeChain& getTimeLine(size_t i) {
         return (*timeLine)[i];
     }
-    glm::mat4 model;
-    size_t layer;
-    glm::vec3 color;
-    Texture2D texture;
-    Shader shader;
     void Calc();
     void Bind(Bone &bone);
 };
 
 struct TextureColorMapBodyArgs {
-    glm::vec2 position;
-    glm::vec2 scale;
-    GLfloat angle;
-    GLfloat Zindex;
-    glm::mat4 model;
+    Bone bone;
+    GLfloat scale;
     glm::vec3 color;
-    Texture2D texture;
-    glm::vec4 textureCoords;
-    Shader shader;
+    Texture2D &texture;
+    Shader &shader;
+    glm::mat4 model;
+    BoneTimeChain *timeLine;
+    BoneTimeChain& getTimeLine() {
+        return *timeLine;
+    }
+    TextureColorMapBodyArgs(TextureColorMapBodyArgs &a) = default;
+    TextureColorMapBodyArgs(Bone Bone_, GLfloat Scale, glm::vec3 Color, Texture2D &Texture, Shader &Shader_)
+     : bone(Bone_), scale(Scale), color(Color), texture(Texture),
+       shader(Shader_), model(glm::mat4(1)), timeLine(nullptr)
+    {
+
+    }
     void Bind();
 };
 

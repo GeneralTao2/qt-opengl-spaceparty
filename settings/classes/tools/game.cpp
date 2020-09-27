@@ -2,13 +2,6 @@
 
 Game::Game()
 {
-    plain = new Plain();
-    background = new Background(plain);
-    ground = new Ground(plain);
-
-    plainMap = new PlainMap();
-    player = new Player(plainMap);
-
     Init();
 }
 Game::~Game() {
@@ -19,7 +12,16 @@ Game::~Game() {
     delete player;
 }
 void Game::Init() {
+    plain = new Plain();
+    background = new Background(plain);
+    ground = new Ground(plain);
 
+    plainMap = new PlainMap();
+    player = new Player(plainMap);
+}
+
+void Game::ProcessInput(GLFWwindow *window) {
+    player->rig->ProcessInput(window);
 }
 
 void Game::Draw() {

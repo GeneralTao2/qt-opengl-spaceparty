@@ -50,7 +50,7 @@ int main()
     glfwSetFramebufferSizeCallback(window, PI::framebuffer_size_callback);
     glfwSetCursorPosCallback(window, PI::mouse_callback);
     glfwSetScrollCallback(window, PI::scroll_callback);
-    glfwSetWindowPos(window, 100, 50);
+    glfwSetWindowPos(window, 100, 300);
     glfwSwapInterval(1); // Enable vsync
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -86,7 +86,7 @@ int main()
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0f, 0.1f, 1.0f, 1.0f);
-
+        game->ProcessInput(window);
         game->Draw();
 
         glfwSwapBuffers(window);

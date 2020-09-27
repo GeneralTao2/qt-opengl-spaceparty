@@ -25,6 +25,7 @@ public:
     Player *player;
     void Init();
     void Draw();
+    void ProcessInput(GLFWwindow *window);
 };
 
 #endif // GAME_H

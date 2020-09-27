@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <settings/classes/objects/camera.h>
+#include <settings/classes/tools/game.h>
 #include <settings/classes/tools/main_tool.h>
 
 extern Camera camera;
